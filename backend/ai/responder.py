@@ -1,44 +1,36 @@
 from ai.intent_detector import detect_intent
 from ai.rag import retrieve_knowledge
 
-def generate_ai_response(user_message):
-    intent = detect_intent(user_message)
-
-    # RAG check for platform questions
+def generate_ai_response(user_message: str) -> str:
+    # 1️⃣ Knowledge ALWAYS comes first
     knowledge = retrieve_knowledge(user_message)
     if knowledge:
+        return knowledge
+
+    # 2️⃣ Intent only if no knowledge found
+    intent = detect_intent(user_message)
+
+    if intent == "emotional_support":
         return (
-            f"{knowledge}\n"
-            "If you need help with the next step, feel free to ask."
+            "I understand how you’re feeling.\n"
+            "It’s okay to feel this way.\n"
+            "You’re not alone — I’m here with you."
         )
 
-    if intent == "emotional":
+    if intent == "technical_question":
         return (
-            "It’s completely okay to feel this way.\n"
-            "Restarting something new can feel overwhelming.\n"
-            "You’re showing courage by trying.\n"
-            "We’ll take this one step at a time."
+            "This looks like a technical question.\n"
+            "Can you share more details so I can help you clearly?"
         )
 
-    if intent == "technical":
+    if intent == "career_guidance":
         return (
-            "That’s a good question.\n"
-            "Technical concepts take time to understand.\n"
-            "We’ll break it down slowly and clearly.\n"
-            "You’re doing better than you think."
+            "Career decisions can feel overwhelming.\n"
+            "Let’s take it one step at a time."
         )
 
-    if intent == "career":
-        return (
-            "Career decisions can feel confusing at first.\n"
-            "You don’t need to have everything figured out now.\n"
-            "Exploring step by step helps build clarity.\n"
-            "You’re on the right path."
-        )
-
+    # 3️⃣ Final fallback
     return (
-        "I’m here to support you.\n"
-        "Feel free to ask anything.\n"
-        "We can explore this together.\n"
-        "You’re not alone."
+        "I’m here to help you.\n"
+        "Please let me know what you’d like support with."
     )

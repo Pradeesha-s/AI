@@ -1,28 +1,41 @@
-def detect_intent(message):
+def detect_intent(message: str) -> str:
     message = message.lower()
 
     emotional_keywords = [
-        "lost", "confused", "scared", "anxious",
-        "tired", "demotivated", "stress", "worried"
+        "sad", "confused", "lost", "stressed", "worried",
+        "anxious", "scared", "overwhelmed", "not confident",
+        "don’t know", "dont know"
+    ]
+
+    platform_keywords = [
+        "task", "quiz", "dashboard", "login", "course",
+        "assessment", "assignment", "submission"
     ]
 
     technical_keywords = [
-        "what is", "how", "api", "react", "python",
-        "flask", "database", "backend", "frontend"
+        "react", "javascript", "python", "flask",
+        "api", "backend", "frontend", "error", "bug"
     ]
 
     career_keywords = [
-        "career", "role", "job", "restart",
-        "which", "path", "learn"
+        "job", "career", "role", "roadmap",
+        "interview", "resume", "cv"
     ]
 
-    if any(word in message for word in emotional_keywords):
-        return "emotional"
+    for word in emotional_keywords:
+        if word in message:
+            return "emotional_support"
 
-    if any(word in message for word in technical_keywords):
-        return "technical"
+    for word in platform_keywords:
+        if word in message:
+            return "platform_help"
 
-    if any(word in message for word in career_keywords):
-        return "career"
+    for word in technical_keywords:
+        if word in message:
+            return "technical_question"
 
-    return "general"
+    for word in career_keywords:
+        if word in message:
+            return "career_guidance"
+
+    return "general_query"
