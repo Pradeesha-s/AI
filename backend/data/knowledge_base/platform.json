@@ -1,0 +1,6 @@
+{
+  "quiz_access": "Users can access the quiz only after submitting the task for the day.",
+  "task_submission": "Tasks must be submitted using a GitHub repository link.",
+  "dashboard": "The dashboard shows assigned tasks, completed tasks, and performance.",
+  "mock_interview": "Mock interviews are unlocked after completing all 30 days of tasks."
+}
